@@ -1,0 +1,20 @@
+version: '3.5'
+
+services:
+    simple-laravel-app:
+        restart: always
+        container_name: simple-laravel-app
+        build:
+            context: ./
+            dockerfile: ./docker/Dockerfile
+        ports:
+            - 8000:80
+        volumes:
+            - ./:/var/www/html
+            - /var/www/html/vendor/
+            - ./docker/config/default.conf:/etc/nginx/conf.d/default.conf:ro
+        networks:
+            - simple-laravel
+networks:
+    simple-laravel:
+        driver: bridge
