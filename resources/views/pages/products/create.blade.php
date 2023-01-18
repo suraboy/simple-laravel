@@ -38,8 +38,15 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label>Base Price</label>
+                                    <label>Base Price (ราคาทุน)</label>
                                     <input type="text" name="base_price" class="form-control numeric"
+                                           maxlength="10" placeholder="Input Price/Bath">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Sale Price (ราคาขาย)</label>
+                                    <input type="text" name="sale_price" class="form-control numeric"
                                            maxlength="10" placeholder="Input Price/Bath">
                                 </div>
                             </div>

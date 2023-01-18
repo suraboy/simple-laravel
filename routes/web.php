@@ -16,12 +16,13 @@ use App\Http\Controllers\Web\DashboardController;
 */
 
 Route::group([
-//    'namespace' => 'Web',
 //    'middleware' => ['auth']
 ], function ($route) {
+
     $route->controller(DashboardController::class)->group(function ($route) {
         $route->get('/', 'index')->name('homepage');;
     });
+
 
     $route->controller(ProductController::class)->group(function ($route) {
         $route->get('/products', 'index')->name("products.index");
