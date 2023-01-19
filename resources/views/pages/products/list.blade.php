@@ -32,8 +32,9 @@
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th>Item</th>
+                            <th>Name</th>
                             <th>Base Price</th>
+                            <th>Sale Price</th>
                             <th>Stock Total</th>
                             <th>Created date</th>
                             <th>Updated date</th>
@@ -42,8 +43,9 @@
                         </thead>
                         <tfoot>
                         <tr>
-                            <th>Item</th>
+                            <th>Name</th>
                             <th>Base Price</th>
+                            <th>Sale Price</th>
                             <th>Stock Total</th>
                             <th>Created date</th>
                             <th>Updated date</th>
@@ -54,20 +56,25 @@
                         @foreach($products as $key => $item)
                             <tr>
                                 <td>{{$item['name']}}</td>
-                                <td>{{number_format($item['base_price'],2)}}</td>
-                                <td>{{$item['stock_total']}}</td>
+                                <td>{{number_format($item['base_price'] ?? 0,2)}}</td>
+                                <td>{{number_format($item['sale_price'] ?? 0 ,2)}}</td>
+                                <td>{{$item['stock_total'] ?? 0}}</td>
                                 <td>{{date('Y-m-d H:i:s',strtotime($item['created_at']))}}</td>
                                 <td>{{date('Y-m-d H:i:s',strtotime($item['updated_at']))}}</td>
-                                <td>
-                                    <form id="form_product_delete_{{$item->_id}}" method="POST">
-{{--                                          action="{{route('products.destroy')}}">--}}
-                                        <input type="hidden" name="id" id="product_id" value="{{$item->_id}}">
-{{--                                        <a href='{{route("products.info",["id"=>$item->_id])}}'--}}
-{{--                                           class="btn btn-primary"><i--}}
-{{--                                                class="fa fa-edit" aria-hidden="true"></i></a>--}}
-                                        <button type="button" class="btn btn-danger"
-                                                onclick="deleteProduct({{$item->_id}})"><i
-                                                class="fa fa-trash" aria-hidden="true"></i></button>
+                                <td class="product-actions text-center">
+                                    <a class="btn btn-info btn-sm" href="{{route('products.info',['id'=> $item['_id']])}}">
+                                        <i class="fas fa-pencil-alt">
+                                        </i>
+                                        Edit
+                                    </a>
+
+                                    <form method="POST" action="{{route('products.destroy',['id'=> $item['_id']])}}" style="display: inline-block!important;">
+                                        {!! csrf_field() !!}
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash">
+                                            </i>
+                                            Delete
+                                        </button>
                                     </form>
                                 </td>
                             </tr>
@@ -77,44 +84,32 @@
                 </div>
                 <!-- ./card-body -->
                 <div class="card-footer">
-                    {{--                    <div class="row">--}}
-                    {{--                        <div class="col-sm-3 col-6">--}}
-                    {{--                            <div class="description-block border-right">--}}
-                    {{--                                <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 17%</span>--}}
-                    {{--                                <h5 class="description-header">$35,210.43</h5>--}}
-                    {{--                                <span class="description-text">TOTAL REVENUE</span>--}}
-                    {{--                            </div>--}}
-                    {{--                            <!-- /.description-block -->--}}
-                    {{--                        </div>--}}
-                    {{--                        <!-- /.col -->--}}
-                    {{--                        <div class="col-sm-3 col-6">--}}
-                    {{--                            <div class="description-block border-right">--}}
-                    {{--                                <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i> 0%</span>--}}
-                    {{--                                <h5 class="description-header">$10,390.90</h5>--}}
-                    {{--                                <span class="description-text">TOTAL COST</span>--}}
-                    {{--                            </div>--}}
-                    {{--                            <!-- /.description-block -->--}}
-                    {{--                        </div>--}}
-                    {{--                        <!-- /.col -->--}}
-                    {{--                        <div class="col-sm-3 col-6">--}}
-                    {{--                            <div class="description-block border-right">--}}
-                    {{--                                <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 20%</span>--}}
-                    {{--                                <h5 class="description-header">$24,813.53</h5>--}}
-                    {{--                                <span class="description-text">TOTAL PROFIT</span>--}}
-                    {{--                            </div>--}}
-                    {{--                            <!-- /.description-block -->--}}
-                    {{--                        </div>--}}
-                    {{--                        <!-- /.col -->--}}
-                    {{--                        <div class="col-sm-3 col-6">--}}
-                    {{--                            <div class="description-block">--}}
-                    {{--                                <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i> 18%</span>--}}
-                    {{--                                <h5 class="description-header">1200</h5>--}}
-                    {{--                                <span class="description-text">GOAL COMPLETIONS</span>--}}
-                    {{--                            </div>--}}
-                    {{--                            <!-- /.description-block -->--}}
-                    {{--                        </div>--}}
-                    {{--                    </div>--}}
-                    <!-- /.row -->
+                    <div class="row">
+                        <div class="col-sm-4 col-6">
+                            <div class="description-block border-right">
+                                <h5 class="description-header">{{number_format($summary['product_stocks'] ?? 0)}}</h5>
+                                <span class="description-text">PRODUCTS IN STOCK</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-4 col-6">
+                            <div class="description-block border-right">
+                                <h5 class="description-header">฿{{number_format($summary['product_cost'] ?? 0)}}</h5>
+                                <span class="description-text">TOTAL COST</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-4 col-6">
+                            <div class="description-block border-right">
+                                <h5 class="description-header">฿{{number_format($summary['product_profit'] ?? 0)}}</h5>
+                                <span class="description-text">TOTAL PROFIT</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
                 </div>
                 <!-- /.card-footer -->
             </div>
@@ -123,21 +118,9 @@
         <!-- /.col -->
     </div>
 @endsection('content')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#product").addClass("active");
-        $("#example1").DataTable({
-            "responsive": true, "lengthChange": false, "autoWidth": false,
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
-        });
-    });
-</script>
+
+@push('styles')
+    @include('pages.products.css.default')
+@endpush
+
+@include('pages.products.js.list-script')

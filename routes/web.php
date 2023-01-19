@@ -25,11 +25,13 @@ Route::group([
 
 
     $route->controller(ProductController::class)->group(function ($route) {
-        $route->get('/products', 'index')->name("products.index");
-        $route->get('/products/create', 'create')->name("products.create");
-        $route->post('/products/insert', 'insert')->name('products.insert');
-//        $route->get('/info','ProductController@info')->name('products.info');
-//        $route->post('/update','ProductController@update')->name('products.update');
-//        $route->post('/destroy','ProductController@destroy')->name('products.destroy');
+        $route->group(['prefix' => 'products'], function ($route) {
+            $route->get('/', 'index')->name("products.index");
+            $route->get('/create', 'create')->name("products.create");
+            $route->post('/insert', 'insert')->name('products.insert');
+            $route->get('info', 'info')->name('products.info');
+            $route->post('update', 'update')->name('products.update');
+            $route->post('/destroy', 'destroy')->name('products.destroy');
+        });
     });
 });

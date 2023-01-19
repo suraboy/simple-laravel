@@ -34,7 +34,21 @@ class ProductController extends Controller
     {
         $response = $this->productRepository->get();
 
-        return view('pages.products.list')->with(['products' => $response]);
+        /* set footer report */
+        $product_cost = 0;
+        $product_profit = 0;
+        foreach ($response as $val) {
+            $product_cost += ($val->base_price * $val->stock_total);
+            $product_profit += ($val->sale_price * $val->stock_total);
+        }
+
+        $array_summary = [
+            'product_stocks' => $response->sum('stock_total'),
+            'product_cost' => $product_cost,
+            'product_profit' => $product_profit == 0 ? $product_cost : $product_profit
+        ];
+        /* end report */
+        return view('pages.products.list')->with(['products' => $response, 'summary' => $array_summary]);
     }
 
     /**
@@ -53,9 +67,10 @@ class ProductController extends Controller
     public function insert(Request $request)
     {
         $params = [
-            'name' => $request->product_name,
-            'base_price' => number_format($request->base_price,2),
-            'stock_total' => (int)$request->stock_total,
+            'name' => $request->product_name ?? "",
+            'base_price' => number_format($request->base_price ?? 0, 2),
+            'sale_price' => number_format($request->base_price ?? 0, 2),
+            'stock_total' => (int)$request->stock_total ?? 0,
         ];
         $this->productRepository->create($params);
         return back()->with(['notification' => ['alert_type' => 'success', 'message' => 'Your product has been saved.']]);
@@ -67,7 +82,8 @@ class ProductController extends Controller
      */
     public function info(Request $request)
     {
-        dd($request->id);
+        $response = $this->productRepository->find($request->id);
+        return view('pages.products.info')->with(['products' => $response]);
     }
 
     /**
@@ -81,9 +97,9 @@ class ProductController extends Controller
             return $value != null;
         });
 
-        $response = $this->productRepository->update($params->all(), $request->member_id);
+        $response = $this->productRepository->update($params->all(), $request->_id);
 
-        return back()->with(['alert-success' => 'Update Product Successfully.', 'products' => $response]);
+        return back()->with(['notification' => ['alert_type' => 'success', 'message' => 'Your product has been deleted.', 'products' => $response]]);
     }
 
     /**
@@ -94,6 +110,6 @@ class ProductController extends Controller
     {
         $response = $this->productRepository->delete($request->id);
 
-        return back()->with(['alert-success' => 'Delete Product Successfully.', 'products' => $response]);
+        return back()->with(['notification' => ['alert_type' => 'success', 'message' => 'Your product has been deleted.', 'products' => $response]]);
     }
 }
