@@ -64,7 +64,8 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary float-right">Submit</button>
+                        <button type="submit" class="btn btn-primary float-right">
+                            <i class="fa fa-save" role="presentation" aria-hidden="true"></i> Submit</button>
                     </div>
                 </div>
             </div>

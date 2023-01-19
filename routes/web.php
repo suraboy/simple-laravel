@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\ProductController;
 use App\Http\Controllers\Web\DashboardController;
+use App\Http\Controllers\Web\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,4 +37,12 @@ Route::group([
             $route->post('/destroy', 'destroy')->name('products.destroy');
         });
     });
+
+    $route->controller(UserController::class)->group(function ($route) {
+        $route->group(['prefix' => 'users'], function ($route) {
+            $route->get('info', 'profile')->name('users.info');
+        });
+    });
+
+
 });
