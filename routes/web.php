@@ -15,8 +15,10 @@ use App\Http\Controllers\Web\DashboardController;
 |
 */
 
+Auth::routes();
+
 Route::group([
-//    'middleware' => ['auth']
+    'middleware' => ['auth']
 ], function ($route) {
 
     $route->controller(DashboardController::class)->group(function ($route) {

@@ -19,5 +19,17 @@
                 </p>
             </a>
         </li>
+        <div class="dropdown-divider"></div>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                <i class="nav-icon fas fa-sign-out-alt fa-fw"></i>
+                <p>Log Out</p>
+            </a>
+        </li>
     </ul>
 </nav>
+
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
