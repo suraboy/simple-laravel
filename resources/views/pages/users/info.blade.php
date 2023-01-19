@@ -1,5 +1,6 @@
 <meta name="_token" content="{!! csrf_token() !!}"/>
 @extends('layouts.backend')
+@section('title', 'User Info')
 @section('breadcrumb')
 
     <div class="container-fluid">
