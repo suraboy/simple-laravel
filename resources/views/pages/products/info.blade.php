@@ -9,7 +9,7 @@
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{route('homepage')}}">Home</a></li>
                     <li class="breadcrumb-item"><a href="{{route('products.index')}}">Product</a></li>
-                    <li class="breadcrumb-item active">Create</li>
+                    <li class="breadcrumb-item active">Info</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -17,13 +17,14 @@
 @endsection('breadcrumb')
 
 @section('content')
-    <form id="quickForm" action="{{route('products.insert')}}" method="POST">
+    <form id="updateForm" action="{{route('products.update')}}" method="POST">
         {!! csrf_field() !!}
+        <input type="hidden" name="_id">
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">Create Product</h5>
+                        <h5 class="card-title">Product Info</h5>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -34,7 +35,7 @@
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label>Name</label> <span style="color:red;"> *</span>
-                                            <input type="text" name="product_name" class="form-control"
+                                            <input type="text" name="name" class="form-control"
                                                    placeholder="Please input product name">
                                         </div>
                                     </div>
@@ -64,7 +65,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary float-right">Submit</button>
+                        <button type="submit" class="btn btn-primary float-right">Update</button>
                     </div>
                 </div>
             </div>
@@ -72,4 +73,4 @@
     </form>
 @endsection('content')
 
-@include('pages.products.js.create-script')
+@include('pages.products.js.info-script')

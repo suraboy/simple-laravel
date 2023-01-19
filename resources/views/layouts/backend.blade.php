@@ -97,6 +97,14 @@
     @include("components.footer")
 
 </div>
+
+<!-- core js -->
+@include('utils.script')
+<!-- alert -->
+@include('commons.alert')
+
+@stack('scripts')
+
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
@@ -134,5 +142,7 @@
 <script src="{{ asset('plugins/jquery-validation/jquery.validate.min.js')}}"></script>
 <script src="{{ asset('plugins/jquery-validation/additional-methods.min.js')}}"></script>
 
+<script src="{{asset('dist/js/adminlte.min.js')}}"></script>
+@stack('styles')
 </body>
 </html>
