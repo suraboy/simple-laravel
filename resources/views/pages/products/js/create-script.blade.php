@@ -8,7 +8,7 @@
         $.validator.setDefaults({
             submitHandler: function () {
                 showLoading();
-                // $('#quickForm').submit();
+                $('#quickForm').submit();
             }
         });
         $('#quickForm').validate({
