@@ -2,17 +2,16 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#product").addClass("active");
-        $("#example1").DataTable({
-            "responsive": true, "lengthChange": false, "autoWidth": false,
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
+        $("#productTable").DataTable({
+            "order": [[ 5, "desc" ]],
             "responsive": true,
-        });
+            "autoWidth": false,
+            "oLanguage": {
+                "sProcessing": showLoading()
+            },
+            "initComplete": function () {
+                hideLoading()
+            },
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     });
 </script>
