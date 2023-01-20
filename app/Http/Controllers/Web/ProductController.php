@@ -34,21 +34,7 @@ class ProductController extends Controller
     {
         $response = $this->productRepository->get();
 
-        /* set footer report */
-        $product_cost = 0;
-        $product_profit = 0;
-        foreach ($response as $val) {
-            $product_cost += ($val->base_price * $val->stock_total);
-            $product_profit += ($val->sale_price * $val->stock_total);
-        }
-
-        $array_summary = [
-            'product_stocks' => $response->sum('stock_total'),
-            'product_cost' => $product_cost,
-            'product_profit' => $product_profit == 0 ? $product_cost : $product_profit
-        ];
-        /* end report */
-        return view('pages.products.list')->with(['products' => $response, 'summary' => $array_summary]);
+        return view('pages.products.list')->with(['products' => $response]);
     }
 
     /**
@@ -69,7 +55,7 @@ class ProductController extends Controller
         $params = [
             'name' => $request->product_name ?? "",
             'base_price' => number_format($request->base_price ?? 0, 2),
-            'sale_price' => number_format($request->base_price ?? 0, 2),
+            'sale_price' => number_format($request->sale_price ?? 0, 2),
             'stock_total' => (int)$request->stock_total ?? 0,
         ];
         $this->productRepository->create($params);

@@ -83,35 +83,6 @@
                     </table>
                 </div>
                 <!-- ./card-body -->
-                <div class="card-footer">
-                    <div class="row">
-                        <div class="col-sm-4 col-6">
-                            <div class="description-block border-right">
-                                <h5 class="description-header">{{number_format($summary['product_stocks'] ?? 0)}}</h5>
-                                <span class="description-text">PRODUCTS IN STOCK</span>
-                            </div>
-                            <!-- /.description-block -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-sm-4 col-6">
-                            <div class="description-block border-right">
-                                <h5 class="description-header">฿{{number_format($summary['product_cost'] ?? 0)}}</h5>
-                                <span class="description-text">TOTAL COST</span>
-                            </div>
-                            <!-- /.description-block -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-sm-4 col-6">
-                            <div class="description-block border-right">
-                                <h5 class="description-header">฿{{number_format($summary['product_profit'] ?? 0)}}</h5>
-                                <span class="description-text">TOTAL PROFIT</span>
-                            </div>
-                            <!-- /.description-block -->
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                </div>
-                <!-- /.card-footer -->
             </div>
             <!-- /.card -->
         </div>
